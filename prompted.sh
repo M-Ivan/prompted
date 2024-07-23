@@ -40,7 +40,7 @@ function set_ps1() {
     ip_address=$(private_ip)
     local branch=$(git_branch)
 
-    PS1="${prompt_symbol} ${user_name}@${ip_address} ${workspace} ${branch} \$ "
+    PS1="${prompt_symbol} ${user_name}@${ip_address} > ${workspace} ${branch} \$ "
 }
 
 # Apply the function to update PS1
