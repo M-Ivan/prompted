@@ -43,4 +43,10 @@ function set_ps1() {
     PS1="${prompt_symbol} ${user_name}@${ip_address} ${workspace} ${branch} \$ "
 }
 
-set_ps1
+# Apply the function to update PS1
+if [[ $SHELL == *"bash"* ]]; then
+    PROMPT_COMMAND=set_ps1
+elif [[ $SHELL == *"zsh"* ]]; then
+    autoload -Uz add-zsh-hook
+    add-zsh-hook precmd set_ps1
+fi
