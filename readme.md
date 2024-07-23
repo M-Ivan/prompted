@@ -1,6 +1,6 @@
 # Prompted √
 
-The prompt you allways wanted.
+The prompt you always wanted.
 
 ## Requirements
 
@@ -27,8 +27,8 @@ Prompted is a personal project, as i noticed that i was reconfiguring the same s
 ## Installation
 
 ```bash
-$ chmod +x ~/your/path/to/prompted/install.sh # Must be absolute path
-$ ./install.sh # in the repo directory
+$ chmod +x install.sh
+$ ./install.sh
 ```
 
 Uppon succefull installation, you will require to source the `~/.bashrc` or `~/.bash_profile` as the shell profile requires to reload in order for the changes to take effect. You can also restart your terminal.
@@ -36,8 +36,8 @@ Uppon succefull installation, you will require to source the `~/.bashrc` or `~/.
 ## Uninstall
 
 ```bash
-$ chmod +x ~/your/path/to/prompted/uninstall.sh # Must be absolute path
-$ ./install.sh # in the repo directory
+$ chmod +x uninstall.sh
+$ ./uninstall.sh
 ```
 
 After uninstalling you need to restart your terminal.
