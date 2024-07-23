@@ -25,16 +25,10 @@ function source_prompt_script() {
 }
 
 # Detect shell and source accordingly
-if [ -n "$ZSH_VERSION" ]; then
-    # For Zsh
-    if [ -f "$HOME/.zshrc" ]; then
-        source_prompt_script "$HOME/.zshrc"
-    fi
-elif [ -n "$BASH_VERSION" ]; then
-    # For Bash
-    if [ -f "$HOME/.bashrc" ]; then
-        source_prompt_script "$HOME/.bashrc"
-    fi
+if [ -f "$HOME/.zshrc" ]; then
+    source_prompt_script "$HOME/.zshrc"
+elif [ -f "$HOME/.bashrc" ]; then
+    source_prompt_script "$HOME/.bashrc"
 else
     echo "Unsupported shell. Please use Bash or Zsh."
     exit 1

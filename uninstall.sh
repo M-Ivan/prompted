@@ -9,6 +9,8 @@ SOURCE_COMMAND="source $TARGET_FILE"
 remove_source_command() {
     local profile_file="$1"
 
+    echo "profile $1"
+
     # Check if the profile file exists
     if [ -f "$profile_file" ]; then
         # Remove the source command from the profile file
@@ -27,18 +29,13 @@ else
 fi
 
 # Detect shell and remove source accordingly
-if [ -n "$ZSH_VERSION" ]; then
-    # For Zsh
-    if [ -f "$HOME/.zshrc" ]; then
-        remove_source_command "$HOME/.zshrc"
-    fi
-elif [ -n "$BASH_VERSION" ]; then
-    # For Bash
-    if [ -f "$HOME/.bashrc" ]; then
-        remove_source_command "$HOME/.bashrc"
-    fi
 
+if [ -f "$HOME/.zshrc" ]; then
+    remove_source_command "$HOME/.zshrc"
+elif [ -f "$HOME/.bashrc" ]; then
+    remove_source_command "$HOME/.bashrc"
 else
     echo "Unsupported shell. Please use Bash or Zsh."
     exit 1
+
 fi
