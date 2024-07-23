@@ -1,6 +1,14 @@
 # Displays your private ip in the prompt
 function private_ip() {
-    hostname -I | awk '{print $1}'
+    if [[ $SHELL == *"bash"* ]]; then
+        local ip_address=$(hostname -I | awk '{print $1}')
+    fi
+    if [[ $SHELL == *"zsh"* ]]; then
+        local ip_address=$(ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}')
+    fi
+
+    echo $ip_address
+
 }
 
 # Displays the current git branch in the prompt or empty string if not in a git repo
@@ -29,7 +37,7 @@ function set_ps1() {
         prompt_symbol=$last_exit_code
     fi
 
-    local ip_address=$(private_ip)
+    ip_address=$(private_ip)
     local branch=$(git_branch)
 
     PS1="${prompt_symbol} ${user_name}@${ip_address} ${workspace} ${branch} \$ "
