@@ -14,25 +14,31 @@ remove_source_command() {
         # Remove the source command from the profile file
         sed -i.bak "\|$SOURCE_COMMAND|d" "$profile_file"
         echo "Removed source command from $profile_file"
+        echo "Uninstallation complete. Please restart your terminal or run source $profile_file to apply the changes."
     fi
 }
-
 # Remove the custom prompt script from the home directory
 if [ -f "$TARGET_FILE" ]; then
+    echo "Removing $TARGET_FILE..."
     rm "$TARGET_FILE"
     echo "Removed $TARGET_FILE"
 else
     echo "$TARGET_FILE does not exist"
 fi
 
-# Remove the source command from .zshrc if it exists
-if [ -f "$HOME/.zshrc" ]; then
-    remove_source_command "$HOME/.zshrc"
-fi
+# Detect shell and remove source accordingly
+if [ -n "$ZSH_VERSION" ]; then
+    # For Zsh
+    if [ -f "$HOME/.zshrc" ]; then
+        remove_source_command "$HOME/.zshrc"
+    fi
+elif [ -n "$BASH_VERSION" ]; then
+    # For Bash
+    if [ -f "$HOME/.bashrc" ]; then
+        remove_source_command "$HOME/.bashrc"
+    fi
 
-# Remove the source command from .bashrc if it exists
-if [ -f "$HOME/.bashrc" ]; then
-    remove_source_command "$HOME/.bashrc"
+else
+    echo "Unsupported shell. Please use Bash or Zsh."
+    exit 1
 fi
-
-echo "Uninstallation complete. Please restart your terminal to uninstall the changes."

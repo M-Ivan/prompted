@@ -1,6 +1,6 @@
 # Displays your private ip in the prompt
 function private_ip() {
-    ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}'
+    hostname -I | awk '{print $1}'
 }
 
 # Displays the current git branch in the prompt or empty string if not in a git repo
@@ -11,24 +11,28 @@ function git_branch() {
     fi
 }
 
-# Displays the prompt with the last exit code if it was not 0
-# And loads other vars
-function zsh_prompt() {
+function set_ps1() {
     local last_exit_code=$?
     local prompt_symbol="√"
+
+    if [[ $SHELL == *"bash"* ]]; then
+        local user_name="\u"
+        local workspace="\w"
+
+    fi
+    if [[ $SHELL == *"zsh"* ]]; then
+        local user_name="%n"
+        local workspace="%~"
+    fi
 
     if [[ $last_exit_code -ne 0 ]]; then
         prompt_symbol=$last_exit_code
     fi
 
-    local user_name="%n"
     local ip_address=$(private_ip)
-    local workspace="%~"
     local branch=$(git_branch)
 
-    # Format definition
-    PS1="${prompt_symbol} ${user_name}@${ip_address} > ${workspace} ${branch} \$ "
+    PS1="${prompt_symbol} ${user_name}@${ip_address} ${workspace} ${branch} \$ "
 }
 
-autoload -U add-zsh-hook
-add-zsh-hook precmd zsh_prompt
+set_ps1
