@@ -1,10 +1,10 @@
 # Displays your private ip in the prompt
 function private_ip() {
-    if [[ $SHELL == *"bash"* ]]; then
-        local ip_address=$(hostname -I | awk '{print $1}')
-    fi
-    if [[ $SHELL == *"zsh"* ]]; then
-        local ip_address=$(ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}')
+    # MacOS and Linux have different commands to get the private IP address
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        ip_address=$(ifconfig | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}')
+    else
+        ip_address=$(ip addr show | grep 'inet ' | grep -v '127.0.0.1' | awk '{print $2}' | cut -d'/' -f1)
     fi
 
     echo $ip_address
